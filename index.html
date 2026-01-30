@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mariê joias</title>
+
+  <!-- Fontes (elegante + moderno) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Nova identidade (azul marinho + off-white + champagne) */
+      --bg: #F5F1EC;              /* off-white quente */
+      --surface: rgba(255,255,255,0.78);
+      --surfaceSolid: #FFFFFF;
+      --stroke: rgba(21, 33, 58, 0.12);
+      --text: #1A2234;            /* texto principal */
+      --muted: rgba(26, 34, 52, 0.72);
+
+      --navy: #1B2A45;            /* principal */
+      --navy2:#0F1C33;            /* hover/escuro */
+      --champ:#D8C2A4;            /* detalhe premium */
+      --champ2:#EFE2D3;           /* detalhe claro */
+
+      --shadow: 0 18px 55px rgba(13, 20, 35, 0.12);
+      --shadow2: 0 10px 30px rgba(13, 20, 35, 0.10);
+      --radius: 22px;
+
+      --container: min(1120px, 92vw);
+    }
+
+    *{ box-sizing: border-box; margin:0; padding:0; }
+    html{ scroll-behavior: smooth; }
+    body{
+      font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.5;
+
+      /* Fundo mais alinhado ao marinho + champagne */
+      background:
+        radial-gradient(1100px 700px at 12% 10%, rgba(216,194,164,0.35), transparent 60%),
+        radial-gradient(900px 600px at 92% 18%, rgba(27,42,69,0.14), transparent 58%),
+        radial-gradient(800px 520px at 40% 92%, rgba(216,194,164,0.22), transparent 60%),
+        var(--bg);
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    img{ max-width: 100%; display: block; }
+    .container{ width: var(--container); margin: 0 auto; }
+
+    /* NAV */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(245,241,236,0.72);
+      border-bottom: 1px solid rgba(21, 33, 58, 0.10);
+    }
+    .nav-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      padding: 14px 0;
+      min-height: 72px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark{
+      width: 50px;
+      height: 50px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #22365A, #16243E); /* azul profundo */
+      box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+      overflow:hidden;
+    }
+
+    .brand-mark img{
+      width: 120%;
+      height: 120%;
+      object-fit: cover;   /* corta o excesso branco */
+    }
+
+    .brand-mark:hover{
+      transform: scale(1.05);
+      transition: 0.25s;
+    }
+
+    .brand .name{
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .nav-links{
+      display:flex;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-links a{
+      padding: 8px 10px;
+      border-radius: 12px;
+      transition: 0.22s ease;
+    }
+    .nav-links a:hover{
+      background: rgba(216,194,164,0.28);
+      color: var(--text);
+    }
+
+    /* BOTÕES */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.35);
+      cursor:pointer;
+      transition: 0.22s ease;
+      font-weight: 700;
+      letter-spacing: 0.1px;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .btn-primary{
+      background: linear-gradient(135deg, var(--navy), var(--navy2));
+      color: #fff;
+      box-shadow: 0 14px 35px rgba(27,42,69,0.28);
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+    .btn-primary:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+    .btn-ghost{
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(21, 33, 58, 0.14);
+      color: var(--text);
+    }
+    .btn-ghost:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.88); }
+
+    /* HERO */
+    .hero{ padding: 38px 0 10px; }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .hero-card{
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 34px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(650px 300px at 15% 0%, rgba(216,194,164,0.40), transparent 62%),
+        radial-gradient(520px 260px at 98% 12%, rgba(27,42,69,0.18), transparent 60%);
+      pointer-events:none;
+      opacity: 0.95;
+    }
+    .hero-content{ position: relative; z-index: 1; }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(216,194,164,0.28);
+      border: 1px solid rgba(21, 33, 58, 0.10);
+      color: rgba(26,34,52,0.86);
+      font-size: 13px;
+      font-weight: 800;
+      width: fit-content;
+      margin-bottom: 16px;
+    }
+    h1{
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      font-size: clamp(34px, 4.2vw, 52px);
+      letter-spacing: -0.6px;
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+    .hero p{
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 56ch;
+    }
+    .hero-actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+    .mini-stats{
+      display:flex;
+      gap: 12px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+    .pill{
+      background: rgba(255,255,255,0.70);
+      border: 1px solid rgba(21, 33, 58, 0.10);
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      color: rgba(26,34,52,0.82);
+    }
+
+    .hero-media{
+      border-radius: var(--radius);
+      overflow:hidden;
+      border: 1px solid rgba(21, 33, 58, 0.12);
+      box-shadow: var(--shadow2);
+      background: rgba(255,255,255,0.40);
+      position: relative;
+    }
+    .hero-media::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(15,28,51,0.06), transparent 45%);
+      pointer-events:none;
+    }
+    .hero-media img{
+      width:100%;
+      height: 520px;
+      object-fit: cover;
+      transform: scale(1.02);
+    }
+
+    /* SECTIONS */
+    .section{ padding: 54px 0; }
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .section-title{
+      font-family: "Playfair Display", serif;
+      font-size: 28px;
+      letter-spacing: -0.3px;
+    }
+    .section-sub{
+      color: var(--muted);
+      max-width: 70ch;
+      font-size: 15px;
+    }
+
+    /* SOBRE (layout robusto no mobile) */
+    /* SOBRE (alinhado ao hero e com selo do mesmo "peso visual") */
+.about-section{
+  /* reduz um pouco o espaçamento pra grudar visualmente no hero */
+  padding: 34px 0 40px;
+}
+
+.about-grid{
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr; /* igual ao hero */
+  gap: 28px;                          /* igual ao hero */
+  align-items: stretch;               /* os dois lados com altura parecida */
+}
+
+/* Card do texto com a mesma linguagem do hero-card */
+.about-text{
+  background: var(--surface);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow2);
+  padding: 28px 30px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;                  /* dá presença e "encaixa" com o bloco do lado */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-text::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(520px 220px at 10% 0%, rgba(216,194,164,0.22), transparent 62%),
+    radial-gradient(520px 220px at 100% 15%, rgba(27,42,69,0.12), transparent 60%);
+  pointer-events:none;
+}
+
+.about-text h2{
+  position: relative;
+  z-index: 1;
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+
+.about-text p{
+  position: relative;
+  z-index: 1;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 15.5px;
+  max-width: 62ch;
+}
+
+/* Lado direito: vira um "media box" parecido com o do hero */
+.about-logo-wrap{
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.about-logo{
+  width: 100%;
+  min-height: 260px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(21, 33, 58, 0.12);
+  box-shadow: var(--shadow2);
+  background: linear-gradient(145deg, #22365A, #16243E);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* brilho sutil por cima (editorial/premium) */
+.about-logo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 55%);
+  pointer-events:none;
+}
+
+/* imagem com "zoom" para parecer maior como no hero */
+.about-logo img{
+  width: 115%;
+  height: 115%;
+  object-fit: cover;        /* corta as bordas e remove qualquer “quadrado branco” */
+  transform: scale(1.06);   /* zoom elegante */
+  filter: contrast(1.02) saturate(1.02);
+}
+
+    /* GRID / CARDS */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+    .card{
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(21, 33, 58, 0.12);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(13,20,35,0.08);
+      transition: 0.22s ease;
+    }
+    .card.soft{
+      background: linear-gradient(135deg, rgba(255,255,255,0.86), rgba(216,194,164,0.14));
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 16px 45px rgba(13,20,35,0.12);
+    }
+    .card .media{
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: rgba(216,194,164,0.12);
+      position: relative;
+    }
+    .card .media::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(15,28,51,0.08), transparent 55%);
+      pointer-events:none;
+    }
+    .card .media img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+    }
+    .card .content{ padding: 16px 16px 18px; }
+    .card h3{ font-size: 15px; margin-bottom: 6px; font-weight: 800; }
+    .card p{ font-size: 14px; color: var(--muted); }
+
+    .span-7{ grid-column: span 7; }
+    .span-5{ grid-column: span 5; }
+    .span-4{ grid-column: span 4; }
+    .span-6{ grid-column: span 6; }
+
+    /* BLOCO “PONTO FÍSICO” INFO */
+    .info{
+      padding: 22px;
+    }
+    .info h3{ font-size:16px; margin-bottom:10px; font-weight: 900; }
+    .info p{ margin-bottom:10px; color: var(--muted); }
+    .info strong{ color: var(--text); }
+    .map-frame{
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid rgba(21, 33, 58, 0.12);
+      background: rgba(255,255,255,0.70);
+    }
+
+    /* CTA */
+    .cta{ padding: 44px 0 68px; }
+    .cta-box{
+      background: linear-gradient(135deg, rgba(27,42,69,0.10), rgba(216,194,164,0.26));
+      border: 1px solid rgba(21, 33, 58, 0.14);
+      border-radius: var(--radius);
+      padding: 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow2);
+    }
+    .cta-box h2{
+      font-family: "Playfair Display", serif;
+      font-size: 26px;
+      letter-spacing: -0.2px;
+    }
+    .cta-box p{ color: var(--muted); margin-top: 6px; }
+
+    /* FOOTER */
+    footer{
+      padding: 28px 0 34px;
+      border-top: 1px solid rgba(21, 33, 58, 0.10);
+      color: rgba(26,34,52,0.72);
+      font-size: 14px;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero-media img{ height: 380px; }
+      .about-grid{
+        grid-template-columns: 1fr;
+      }
+      .about-text,
+      .about-logo{
+        min-height: 220px;
+      }
+    }
+
+    @media (max-width: 760px){
+      .nav-links{ display:none; }
+
+      .span-7,.span-5,.span-6,.span-4{ grid-column: span 12; }
+
+      .hero-card{ text-align: left; padding: 26px; }
+      .hero p{ max-width: 100%; }
+      .hero-media img{ height: 320px; }
+
+      /* Sobre: a logo vira um “card grande” igual ao destaque */
+      .about-section{
+        padding: 26px 0 34px;
+      }
+      .about-text{
+        padding: 22px;
+        text-align: left;
+      }
+      .about-logo{
+        min-height: 210px;
+      }
+      .about-logo img{
+        width: 120%;
+        height: 120%;
+        transform: scale(1.08);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior: auto; }
+      .card:hover, .btn:hover{ transform:none; }
+      *{ transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="brand-mark">
+          <img src="Logo.png" alt="Mariê joias">
+        </span>
+        <div class="name">Mariê joias</div>
+      </div>
+
+      <div class="nav-links">
+        <a href="#colecoes">Coleção</a>
+        <a href="#marca">Identidade</a>
+        <a href="#loja">Ponto físico</a>
+        <a href="#instagram">Instagram</a>
+      </div>
+
+      <a class="btn btn-primary" href="https://www.instagram.com/marriejoiasbr/" target="_blank" rel="noreferrer">
+        Ver no Instagram
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-card">
+        <div class="hero-content">
+          <div class="kicker">luxo discreto • marinho • boutique</div>
+          <h1>Jóias com presença, acabamento impecável e identidade.</h1>
+          <p>
+            <p>
+                A Mariê joias é uma loja de joias sistêmicas com assinatura premium: peças que carregam significado,
+                elegância e intenção. Além da curadoria, você também pode personalizar sua joia para que ela
+                represente sua história — com delicadeza, presença e acabamento impecável.
+            </p>
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://www.instagram.com/marriejoiasbr/" target="_blank" rel="noreferrer">Conhecer a coleção</a>
+            <a class="btn btn-ghost" href="#colecoes">Ver destaques</a>
+          </div>
+
+          <div class="mini-stats">
+            <div class="pill">Presente memorável</div>
+            <div class="pill">Design atemporal</div>
+            <div class="pill">Experiência boutique</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- imagem de impacto (produtos) -->
+      <div class="hero-media" aria-label="Destaque Mariê">
+        <img src="Produtos.png" alt="Mariê joias - vitrine de produtos">
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="about-section">
+    <div class="container about-grid">
+
+        <div class="about-text">
+        <h2>Sobre a Mariê</h2>
+        <p>
+            Uma marca com assinatura premium: azul marinho, minimalismo e um toque editorial.
+            Peças pensadas para compor looks elegantes no dia a dia e em momentos especiais,
+            com presença e delicadeza na medida certa.
+        </p>
+        </div>
+
+        <div class="about-logo-wrap">
+        <div class="about-logo">
+            <img src="Logo.png" alt="Mariê Joias">
+        </div>
+        </div>
+
+    </div>
+  </section>
+
+
+  <!-- COLEÇÕES / PRODUTOS (SÓ JOIAS) -->
+  <section class="section" id="colecoes">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Destaques da Coleção</div>
+          <div class="section-sub">
+            Venha conhecer a Mariê de perto: uma experiência boutique de joias sistêmicas, com atendimento tranquilo,
+            escolha guiada e possibilidade de personalização para criar uma peça com significado e identidade.
+          </div>
+        </div>
+        <a class="btn btn-ghost" href="https://www.instagram.com/marriejoiasbr/" target="_blank" rel="noreferrer">Ver mais no Instagram</a>
+      </div>
+
+      <div class="grid">
+        <article class="card span-7">
+          <div class="media">
+            <img src="Produtos.png" alt="Coleção Mariê joias - produtos">
+          </div>
+          <div class="content">
+            <h3>Curadoria premium</h3>
+            <p>Seleção alinhada ao marinho e ao off-white, com acabamento elegante para presentear (ou se presentear).</p>
+          </div>
+        </article>
+
+        <article class="card span-5 soft">
+          <div class="media">
+            <img src="Caixinha de Alianças.png" alt="Alianças Mariê joias">
+          </div>
+          <div class="content">
+            <h3>Alianças • clássico moderno</h3>
+            <p>Minimalista e sofisticado: perfeito para quem ama elegância discreta e atemporal.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- IDENTIDADE DA MARCA (BRANDING) -->
+  <section class="section" id="marca">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Identidade Mariê</div>
+          <div class="section-sub">
+            Materiais de marca (não são produtos). A ideia é reforçar consistência visual e sensação premium em todos os detalhes.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card span-4">
+          <div class="media">
+            <img src="Cartão.png" alt="Cartão Mariê">
+          </div>
+          <div class="content">
+            <h3>Cartão • papelaria premium</h3>
+            <p>Marinho elegante com tipografia clássica para transmitir autoridade e sofisticação.</p>
+          </div>
+        </article>
+
+        <article class="card span-4">
+          <div class="media">
+            <img src="Mesa com Canetas.png" alt="Canetas e identidade Mariê">
+          </div>
+          <div class="content">
+            <h3>Detalhes • assinatura visual</h3>
+            <p>Um sistema visual consistente que parece “caro” no simples e impecável no conjunto.</p>
+          </div>
+        </article>
+
+        <article class="card span-4">
+          <div class="media">
+            <img src="Caneca.png" alt="Caneca Mariê">
+          </div>
+          <div class="content">
+            <h3>Aplicações • presença de marca</h3>
+            <p>Do digital ao físico: identidade forte, limpa e reconhecível.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOJA / PONTO FÍSICO -->
+  <section class="section" id="loja">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Ponto físico</div>
+          <div class="section-sub">
+            Venha conhecer a Mariê de perto: atendimento com calma, prova das peças e uma experiência boutique.
+          </div>
+        </div>
+        <a class="btn btn-ghost" href="https://www.instagram.com/marriejoiasbr/" target="_blank" rel="noreferrer">Chamar no Instagram</a>
+      </div>
+
+      <div class="grid">
+        <article class="card span-7">
+          <div class="media">
+            <img src="Ponto Físico.png" alt="Ponto físico Mariê joias">
+          </div>
+          <div class="content">
+            <h3>Loja Mariê joias</h3>
+            <p>
+                Ambiente sofisticado e acolhedor para viver a experiência das joias sistêmicas: você conhece a curadoria,
+                entende os significados e, se quiser, personaliza sua peça para ficar do seu jeito.
+            </p>
+          </div>
+        </article>
+
+        <article class="card span-5">
+          <div class="info">
+            <h3>Informações</h3>
+
+            <p>
+              <strong>Endereço:</strong><br>
+              Rua ____ , nº ____, Bairro ____, Cidade - UF
+            </p>
+
+            <p>
+              <strong>Horário:</strong><br>
+              Seg a Sex: 10h–19h • Sáb: 10h–14h
+            </p>
+
+            <p>
+              <strong>Contato:</strong><br>
+              Instagram: @marriejoiasbr
+            </p>
+
+            <p>
+                <strong>Personalização:</strong><br>
+                Ajustes e combinações sob medida para criar uma joia com significado e identidade.
+            </p>
+
+            <div class="map-frame">
+              <iframe
+                title="Mapa Mariê joias"
+                src="https://www.google.com/maps?q=Rua%20____%20____&output=embed"
+                width="100%"
+                height="220"
+                style="border:0;"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+              <a class="btn btn-primary" href="https://www.instagram.com/marriejoiasbr/" target="_blank" rel="noreferrer">Agendar personalização</a>
+              <a class="btn btn-ghost" href="#colecoes">Ver peças</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA INSTAGRAM -->
+  <section class="cta" id="instagram">
+    <div class="container">
+      <div class="cta-box">
+        <div>
+          <h2>Quer ver novidades e lançamentos?</h2>
+          <p>
+            Siga a Mariê joias no Instagram e acompanhe a curadoria de joias sistêmicas e as opções de personalização.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="https://www.instagram.com/marriejoiasbr/" target="_blank" rel="noreferrer">Abrir Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © 2026 Mariê joias • Todos os direitos reservados
+    </div>
+  </footer>
+
+</body>
+</html>
