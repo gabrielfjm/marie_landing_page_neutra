@@ -191,6 +191,60 @@
     }
     .hero-content{ position: relative; z-index: 1; }
 
+    .hero-shell{
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 0; /* sem espaço entre texto e imagem */
+  border-radius: var(--radius);
+  overflow: hidden;
+
+  background: var(--surface);
+  border: 1px solid var(--stroke);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.hero-shell::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(650px 300px at 15% 0%, rgba(216,194,164,0.40), transparent 62%),
+    radial-gradient(520px 260px at 98% 12%, rgba(27,42,69,0.18), transparent 60%);
+  pointer-events:none;
+  opacity: 0.95;
+  z-index: 0;
+}
+
+.hero-left{
+  padding: 34px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-right{
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.20);
+}
+
+.hero-right::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(15,28,51,0.06), transparent 45%);
+  pointer-events:none;
+}
+
+.hero-right img{
+  width: 100%;
+  height: 100%;
+  min-height: 520px;   /* garante a altura “de impacto” */
+  object-fit: cover;
+  display: block;
+}
+
     .kicker{
       display:inline-flex;
       align-items:center;
@@ -259,6 +313,7 @@
       height: 520px;
       object-fit: cover;
       transform: scale(1.02);
+      object-position: center;
     }
 
     /* SECTIONS */
@@ -352,10 +407,12 @@
       min-height: 260px;
       border-radius: var(--radius);
       overflow: hidden;
-      border: 1px solid rgba(21, 33, 58, 0.12);
-      box-shadow: var(--shadow2);
-      background: linear-gradient(145deg, #22365A, #16243E);
+
+      border: none;                /* remove a borda */
+      box-shadow: var(--shadow2);  /* mantém o “card premium” */
+      background: transparent;     /* tira o fundo azul */
       position: relative;
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -372,11 +429,10 @@
 
     /* imagem com "zoom" para parecer maior como no hero */
     .about-logo img{
-      width: 115%;
-      height: 115%;
-      object-fit: cover;        /* corta as bordas e remove qualquer “quadrado branco” */
-      transform: scale(1.06);   /* zoom elegante */
-      filter: contrast(1.02) saturate(1.02);
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      transform: scale(1.10);
     }
 
     /* GRID / CARDS */
@@ -461,6 +517,149 @@
       letter-spacing: -0.2px;
     }
     .cta-box p{ color: var(--muted); margin-top: 6px; }
+    
+/* CARROSSEL (premium, sem fundo “sobrando”, sem setas, sem barra) */
+.carousel{
+  position: relative;
+  margin-top: 14px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* viewport cria corredor igual pros 2 lados */
+.carousel-viewport{
+  overflow: hidden;
+  border-radius: var(--radius);
+  padding-left: 64px;
+  padding-right: 64px;
+  position: relative;
+}
+
+/* setas com mesma distância nas laterais */
+.carousel-arrow{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(21, 33, 58, 0.18);
+  background: rgba(255,255,255,0.86);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 28px rgba(13,20,35,0.12);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 6;
+}
+
+.carousel-arrow span{
+  font-size: 20px;
+  font-weight: 900;
+  color: rgba(26,34,52,0.90);
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+/* agora ficam DENTRO da área do carrossel, mas FORA do conteúdo (por causa do padding do viewport) */
+.carousel-arrow.prev{ left: 16px; }
+.carousel-arrow.next{ right: 16px; }
+
+.carousel-arrow:hover{
+  transform: translateY(-50%) scale(1.06);
+  background: rgba(255,255,255,0.94);
+}
+.carousel-arrow:active{
+  transform: translateY(-50%) scale(0.98);
+}
+
+/* track sem scrollbar */
+.carousel-track{
+  display: flex;
+  gap: 18px;
+  padding: 6px 2px 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar{ display:none; }
+
+/* cards */
+.slide{
+  flex: 0 0 calc((100% - 36px) / 3);
+  scroll-snap-align: start;
+  border-radius: 20px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(21, 33, 58, 0.10);
+  box-shadow: none; /* se quiser ZERO sombra nos cards também, mantém assim */
+}
+.slide:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 45px rgba(13,20,35,0.14);
+}
+
+.slide .media{
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  position: relative;
+  background: rgba(216,194,164,0.12);
+}
+.slide .media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(15,28,51,0.08), transparent 55%);
+  pointer-events:none;
+}
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  transform: scale(1.02);
+}
+
+.slide .content{
+  padding: 14px 14px 16px;
+  background: rgba(255,255,255,0.92);
+}
+.slide h3{
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 900;
+}
+.slide p{
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* DOTS */
+.carousel-dots{
+  display:flex;
+  justify-content:center;
+  gap: 10px;
+  margin-top: 14px;
+}
+.carousel-dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(27,42,69,0.25);
+  background: rgba(27,42,69,0.12);
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.carousel-dot:hover{ transform: scale(1.15); }
+.carousel-dot.is-active{
+  background: var(--navy); /* cor da marca */
+  border-color: var(--navy);
+  transform: scale(1.25);
+}
 
     /* FOOTER */
     footer{
@@ -474,6 +673,8 @@
     @media (max-width: 980px){
       .hero-grid{ grid-template-columns: 1fr; }
       .hero-media img{ height: 380px; }
+      .hero-shell{ grid-template-columns: 1fr; }    
+      .hero-right img{ min-height: 360px; }
       .about-grid{
         grid-template-columns: 1fr;
       }
@@ -481,6 +682,7 @@
       .about-logo{
         min-height: 220px;
       }
+      .slide{ flex: 0 0 calc((100% - 18px) / 2); }
     }
 
     @media (max-width: 760px){
@@ -491,6 +693,8 @@
       .hero-card{ text-align: left; padding: 26px; }
       .hero p{ max-width: 100%; }
       .hero-media img{ height: 320px; }
+      .hero-left{ padding: 26px; }
+      .hero-right img{ min-height: 320px; }
 
       /* Sobre: a logo vira um “card grande” igual ao destaque */
       .about-section{
@@ -508,6 +712,12 @@
         height: 120%;
         transform: scale(1.08);
       }
+    }
+
+    @media (max-width: 620px){
+      .carousel-viewport{ padding: 0; }
+      .carousel-arrow{ display:none; }
+      .slide{ flex: 0 0 90%; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -545,38 +755,41 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-card">
-        <div class="hero-content">
-          <div class="kicker">luxo discreto • marinho • boutique</div>
-          <h1>Jóias com presença, acabamento impecável e identidade.</h1>
-          <p>
+    <div class="container">
+      <div class="hero-shell">      
+        <div class="hero-left">
+          <div class="hero-content">
+            <div class="kicker">luxo discreto • marinho • boutique</div>
+            <h1>Jóias com presença, acabamento impecável e identidade.</h1>
+
             <p>
-                A Mariê joias é uma loja de joias sistêmicas com assinatura premium: peças que carregam significado,
-                elegância e intenção. Além da curadoria, você também pode personalizar sua joia para que ela
-                represente sua história — com delicadeza, presença e acabamento impecável.
+              A Mariê joias é uma loja de joias sistêmicas com assinatura premium: peças que carregam significado,
+              elegância e intenção. Além da curadoria, você também pode personalizar sua joia para que ela
+              represente sua história — com delicadeza, presença e acabamento impecável.
             </p>
-          </p>
 
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://www.instagram.com/marriejoiasbr/" target="_blank" rel="noreferrer">Conhecer a coleção</a>
-            <a class="btn btn-ghost" href="#colecoes">Ver destaques</a>
-          </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://www.instagram.com/marriejoiasbr/" target="_blank" rel="noreferrer">
+                Conhecer a coleção
+              </a>
+              <a class="btn btn-ghost" href="#colecoes">Ver destaques</a>
+            </div>
 
-          <div class="mini-stats">
-            <div class="pill">Presente memorável</div>
-            <div class="pill">Design atemporal</div>
-            <div class="pill">Experiência boutique</div>
+            <div class="mini-stats">
+              <div class="pill">Presente memorável</div>
+              <div class="pill">Design atemporal</div>
+              <div class="pill">Experiência boutique</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- imagem de impacto (produtos) -->
-      <div class="hero-media" aria-label="Destaque Mariê">
-        <img src="Produtos.png" alt="Mariê joias - vitrine de produtos">
+        <div class="hero-right" aria-label="Destaque Mariê">
+          <img src="Capa site.png" alt="Mariê joias - campanha">
+        </div>
       </div>
     </div>
   </section>
+
 
   <!-- SOBRE -->
   <section class="about-section">
@@ -593,7 +806,7 @@
 
         <div class="about-logo-wrap">
         <div class="about-logo">
-            <img src="Logo.png" alt="Mariê Joias">
+            <img src="Produtos.png" alt="Mariê Joias">
         </div>
         </div>
 
@@ -615,27 +828,73 @@
         <a class="btn btn-ghost" href="https://www.instagram.com/marriejoiasbr/" target="_blank" rel="noreferrer">Ver mais no Instagram</a>
       </div>
 
-      <div class="grid">
-        <article class="card span-7">
-          <div class="media">
-            <img src="Produtos.png" alt="Coleção Mariê joias - produtos">
-          </div>
-          <div class="content">
-            <h3>Curadoria premium</h3>
-            <p>Seleção alinhada ao marinho e ao off-white, com acabamento elegante para presentear (ou se presentear).</p>
-          </div>
-        </article>
+      <div class="carousel" aria-label="Carrossel de produtos Mariê joias">
 
-        <article class="card span-5 soft">
-          <div class="media">
-            <img src="Caixinha de Alianças.png" alt="Alianças Mariê joias">
+        <button class="carousel-arrow prev" type="button" aria-label="Anterior">
+          <span>‹</span>
+        </button>
+
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="track-produtos">
+            <!-- slides (os mesmos que você já tem) -->
+            <article class="slide">
+              <div class="media"><img src="Pingente mostruário.png" alt="Pingente em destaque"></div>
+              <div class="content">
+                <h3>Pingentes</h3>
+                <p>Peças com significado e presença, perfeitas para compor camadas.</p>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media"><img src="Pulseira mostruário.png" alt="Pulseira em destaque"></div>
+              <div class="content">
+                <h3>Pulseiras</h3>
+                <p>Acabamento impecável e elegância discreta para o dia a dia.</p>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media"><img src="Relógio.png" alt="Relógio em destaque"></div>
+              <div class="content">
+                <h3>Relógios & acessórios</h3>
+                <p>Um toque de sofisticação para elevar o look com minimalismo.</p>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media"><img src="Solitário mostruário.png" alt="Anel solitário em destaque"></div>
+              <div class="content">
+                <h3>Solitários</h3>
+                <p>Clássico moderno, com brilho elegante e presença na medida certa.</p>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media"><img src="Brincos.png" alt="Brincos em destaque"></div>
+              <div class="content">
+                <h3>Brincos</h3>
+                <p>Detalhes delicados que transformam a composição com leveza.</p>
+              </div>
+            </article>
+
+            <article class="slide">
+              <div class="media"><img src="Colar.png" alt="Colar em destaque"></div>
+              <div class="content">
+                <h3>Colares</h3>
+                <p>Linhas finas e estética premium com assinatura Mariê.</p>
+              </div>
+            </article>
           </div>
-          <div class="content">
-            <h3>Alianças • clássico moderno</h3>
-            <p>Minimalista e sofisticado: perfeito para quem ama elegância discreta e atemporal.</p>
-          </div>
-        </article>
+        </div>
+
+        <button class="carousel-arrow next" type="button" aria-label="Próximo">
+          <span>›</span>
+        </button>
+
+        <div class="carousel-dots" id="dots-produtos" aria-label="Navegação do carrossel"></div>
       </div>
+          
+
     </div>
   </section>
 
@@ -682,6 +941,29 @@
           </div>
         </article>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="experiencia">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-title">A experiência Mariê</div>
+          <div class="section-sub">
+            Do atendimento boutique ao acabamento final: cada detalhe é pensado para você levar mais do que uma joia — levar uma história.
+          </div>
+        </div>
+      </div>
+
+      <article class="card span-12" style="overflow:hidden;">
+        <div class="media" style="aspect-ratio: 16/7;">
+          <img src="Pessoa com Sacola.png" alt="Cliente com sacola Mariê joias">
+        </div>
+        <div class="content">
+          <h3>Embalagem premium & presença de marca</h3>
+          <p>Uma assinatura visual marcante — marinho, off-white e elegância — para transformar cada compra em um momento memorável.</p>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -778,6 +1060,193 @@
       © 2026 Mariê joias • Todos os direitos reservados
     </div>
   </footer>
+
+
+  <script>
+    (function(){
+      const track = document.getElementById('track-produtos');
+      const dotsWrap = document.getElementById('dots-produtos');
+      const btnPrev = document.querySelector('.carousel-arrow.prev');
+      const btnNext = document.querySelector('.carousel-arrow.next');
+      if(!track || !dotsWrap) return;
+
+      // guarda os slides originais (clona pra não perder)
+      const originals = Array.from(track.querySelectorAll('.slide')).map(s => s.cloneNode(true));
+      const total = originals.length;
+      if(total === 0) return;
+
+      let perView = 3;
+      let clonesCount = 3;
+      let timer = null;
+      const AUTOPLAY_MS = 3000;
+
+      let scrollStopT = null;
+
+      function calcPerView(){
+        const w = window.innerWidth;
+        if(w <= 620) perView = 1;
+        else if(w <= 980) perView = 2;
+        else perView = 3;
+        clonesCount = perView; // clones na medida certa
+      }
+
+      function gap(){
+        return parseFloat(getComputedStyle(track).gap) || 18;
+      }
+
+      function slideW(){
+        const first = track.querySelector('.slide');
+        return first ? first.getBoundingClientRect().width : 300;
+      }
+
+      function step(){
+        return slideW() + gap();
+      }
+
+      function build(){
+        track.innerHTML = '';
+
+        // head clones (últimos N)
+        const head = originals.slice(-clonesCount).map(n => n.cloneNode(true));
+        // tail clones (primeiros N)
+        const tail = originals.slice(0, clonesCount).map(n => n.cloneNode(true));
+
+        head.forEach(n => track.appendChild(n));
+        originals.forEach(n => track.appendChild(n.cloneNode(true)));
+        tail.forEach(n => track.appendChild(n));
+      }
+
+      function buildDots(){
+        dotsWrap.innerHTML = '';
+        for(let i=0;i<total;i++){
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'carousel-dot' + (i===0 ? ' is-active' : '');
+          b.setAttribute('aria-label', `Ir para o item ${i+1}`);
+          b.addEventListener('click', () => {
+            stop();
+            goReal(i, true);
+            start();
+          });
+          dotsWrap.appendChild(b);
+        }
+      }
+
+      function setDot(realIndex){
+        const dots = dotsWrap.querySelectorAll('.carousel-dot');
+        dots.forEach((d, idx) => d.classList.toggle('is-active', idx === realIndex));
+      }
+
+      // mapeia virtual -> real
+      function virtualToReal(v){
+        const r = (v - clonesCount) % total;
+        return (r + total) % total;
+      }
+
+      // pega o virtual index baseado na posição atual
+      function getVirtualIndex(){
+        return Math.round(track.scrollLeft / step());
+      }
+
+      function goVirtual(v, smooth=true){
+        track.scrollTo({ left: step() * v, behavior: smooth ? 'smooth' : 'auto' });
+      }
+
+      function goReal(realIndex, smooth=true){
+        const v = clonesCount + realIndex;
+        goVirtual(v, smooth);
+        setDot(realIndex);
+      }
+
+      // teleporte invisível quando cai em clone
+      function normalize(){
+        const v = getVirtualIndex();
+
+        // faixa dos originais no meio:
+        // [0..clonesCount-1] head clones
+        // [clonesCount..clonesCount+total-1] originais
+        // [clonesCount+total..clonesCount+total+clonesCount-1] tail clones
+
+        if(v < clonesCount){
+          // caiu nos head clones -> pula pra mesma posição nos originais
+          goVirtual(v + total, false);
+        } else if(v >= clonesCount + total){
+          // caiu nos tail clones -> volta pra mesma posição nos originais
+          goVirtual(v - total, false);
+        }
+
+        // atualiza dot (sempre pelo virtual atual depois do ajuste)
+        const v2 = getVirtualIndex();
+        setDot(virtualToReal(v2));
+      }
+
+      function start(){
+        stop();
+        timer = setInterval(() => {
+          const v = getVirtualIndex();
+          goVirtual(v + 1, true);
+
+          // depois da animação, normaliza (teleporte invisível se necessário)
+          setTimeout(normalize, 420);
+        }, AUTOPLAY_MS);
+      }
+
+      function stop(){
+        if(timer) clearInterval(timer);
+        timer = null;
+      }
+
+      // botões
+      btnNext?.addEventListener('click', () => {
+        stop();
+        const v = getVirtualIndex();
+        goVirtual(v + 1, true);
+        setTimeout(normalize, 420);
+        start();
+      });
+
+      btnPrev?.addEventListener('click', () => {
+        stop();
+        const v = getVirtualIndex();
+        goVirtual(v - 1, true);
+        setTimeout(normalize, 420);
+        start();
+      });
+
+      // pausa ao hover/touch
+      track.addEventListener('mouseenter', stop);
+      track.addEventListener('mouseleave', start);
+      track.addEventListener('touchstart', stop, { passive:true });
+      track.addEventListener('touchend', start, { passive:true });
+
+      // quando o usuário arrasta, normaliza só quando parar
+      track.addEventListener('scroll', () => {
+        if(scrollStopT) clearTimeout(scrollStopT);
+        scrollStopT = setTimeout(() => {
+          normalize();
+        }, 140);
+      }, { passive:true });
+
+      // init
+      calcPerView();
+      build();
+      buildDots();
+
+      // começa no primeiro original
+      goVirtual(clonesCount, false);
+      setDot(0);
+
+      start();
+
+      window.addEventListener('resize', () => {
+        const currentReal = virtualToReal(getVirtualIndex());
+        calcPerView();
+        build();
+        buildDots();
+        goReal(currentReal, false);
+      });
+    })();
+  </script>
 
 </body>
 </html>
