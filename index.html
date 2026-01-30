@@ -105,7 +105,14 @@
       letter-spacing: 0.2px;
       font-size: 18px;
       line-height: 1;
+      transition: 0.25s ease;
+      display: inline-block; /* necessário para o scale funcionar bonito */
     }
+
+    .brand .name:hover{
+      transform: scale(1.06);
+    }
+
     .nav-links{
       display:flex;
       gap: 12px;
@@ -277,100 +284,100 @@
 
     /* SOBRE (layout robusto no mobile) */
     /* SOBRE (alinhado ao hero e com selo do mesmo "peso visual") */
-.about-section{
-  /* reduz um pouco o espaçamento pra grudar visualmente no hero */
-  padding: 34px 0 40px;
-}
+    .about-section{
+      /* reduz um pouco o espaçamento pra grudar visualmente no hero */
+      padding: 34px 0 40px;
+    }
 
-.about-grid{
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr; /* igual ao hero */
-  gap: 28px;                          /* igual ao hero */
-  align-items: stretch;               /* os dois lados com altura parecida */
-}
+    .about-grid{
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr; /* igual ao hero */
+      gap: 28px;                          /* igual ao hero */
+      align-items: stretch;               /* os dois lados com altura parecida */
+    }
 
-/* Card do texto com a mesma linguagem do hero-card */
-.about-text{
-  background: var(--surface);
-  border: 1px solid var(--stroke);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow2);
-  padding: 28px 30px;
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
-  min-height: 260px;                  /* dá presença e "encaixa" com o bloco do lado */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+    /* Card do texto com a mesma linguagem do hero-card */
+    .about-text{
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      padding: 28px 30px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;                  /* dá presença e "encaixa" com o bloco do lado */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-.about-text::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:
-    radial-gradient(520px 220px at 10% 0%, rgba(216,194,164,0.22), transparent 62%),
-    radial-gradient(520px 220px at 100% 15%, rgba(27,42,69,0.12), transparent 60%);
-  pointer-events:none;
-}
+    .about-text::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(520px 220px at 10% 0%, rgba(216,194,164,0.22), transparent 62%),
+        radial-gradient(520px 220px at 100% 15%, rgba(27,42,69,0.12), transparent 60%);
+      pointer-events:none;
+    }
 
-.about-text h2{
-  position: relative;
-  z-index: 1;
-  font-family: "Playfair Display", serif;
-  font-size: 30px;
-  margin-bottom: 10px;
-  letter-spacing: -0.2px;
-}
+    .about-text h2{
+      position: relative;
+      z-index: 1;
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
 
-.about-text p{
-  position: relative;
-  z-index: 1;
-  color: var(--muted);
-  line-height: 1.7;
-  font-size: 15.5px;
-  max-width: 62ch;
-}
+    .about-text p{
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15.5px;
+      max-width: 62ch;
+    }
 
-/* Lado direito: vira um "media box" parecido com o do hero */
-.about-logo-wrap{
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-}
+    /* Lado direito: vira um "media box" parecido com o do hero */
+    .about-logo-wrap{
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+    }
 
-.about-logo{
-  width: 100%;
-  min-height: 260px;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid rgba(21, 33, 58, 0.12);
-  box-shadow: var(--shadow2);
-  background: linear-gradient(145deg, #22365A, #16243E);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .about-logo{
+      width: 100%;
+      min-height: 260px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(21, 33, 58, 0.12);
+      box-shadow: var(--shadow2);
+      background: linear-gradient(145deg, #22365A, #16243E);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-/* brilho sutil por cima (editorial/premium) */
-.about-logo::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 55%);
-  pointer-events:none;
-}
+    /* brilho sutil por cima (editorial/premium) */
+    .about-logo::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 55%);
+      pointer-events:none;
+    }
 
-/* imagem com "zoom" para parecer maior como no hero */
-.about-logo img{
-  width: 115%;
-  height: 115%;
-  object-fit: cover;        /* corta as bordas e remove qualquer “quadrado branco” */
-  transform: scale(1.06);   /* zoom elegante */
-  filter: contrast(1.02) saturate(1.02);
-}
+    /* imagem com "zoom" para parecer maior como no hero */
+    .about-logo img{
+      width: 115%;
+      height: 115%;
+      object-fit: cover;        /* corta as bordas e remove qualquer “quadrado branco” */
+      transform: scale(1.06);   /* zoom elegante */
+      filter: contrast(1.02) saturate(1.02);
+    }
 
     /* GRID / CARDS */
     .grid{
@@ -511,17 +518,17 @@
   </style>
 </head>
 
-<body>
+<body id="topo">
 
   <!-- NAV -->
   <div class="nav">
     <div class="container nav-inner">
-      <div class="brand">
+      <a href="#topo" class="brand">
         <span class="brand-mark">
-          <img src="Logo.png" alt="Mariê joias">
+            <img src="Logo.png" alt="Mariê joias">
         </span>
         <div class="name">Mariê joias</div>
-      </div>
+      </a>
 
       <div class="nav-links">
         <a href="#colecoes">Coleção</a>
